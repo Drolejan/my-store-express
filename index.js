@@ -12,14 +12,14 @@ const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/err
 const app = express();
 
 //le decimos el puerto en que queremos que corra la aplicación
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const whitelist = ['http://localhost:3000', 'https://myapp.co','http://127.0.0.1:5500'];
+const whitelist = ['http://localhost:8080', 'https://myapp.co','http://127.0.0.1:5500'];
 const options = {
   origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
+    if (whitelist.includes(origin)|| !origin) {
       callback(null, true);
     } else {
       callback(new Error('no permitido'));
